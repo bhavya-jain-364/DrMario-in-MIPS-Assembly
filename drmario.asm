@@ -9,10 +9,10 @@
 # creation, and will indicate otherwise when it is not.
 #
 ######################## Bitmap Display Configuration ########################
-# - Unit width in pixels:       8
-# - Unit height in pixels:      8
-# - Display width in pixels:    512
-# - Display height in pixels:   512
+# - Unit width in pixels:       1
+# - Unit height in pixels:      1
+# - Display width in pixels:    64
+# - Display height in pixels:   128
 # - Base Address for Display:   0x10008000 ($gp)
 ##############################################################################
 
@@ -48,6 +48,26 @@ VIRUS_COLORS:    # Array of possible virus colors
     .word 0x0000FF   # Blue
     .word 0xFF0000   # Red
     .word 0xFFFF00   # Yellow
+
+# Static virus drawing data
+blue_x_coords: .word 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34
+
+blue_y_coords: .word 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 67, 67, 67, 67, 67, 67, 67, 67, 67, 67, 68, 68, 68, 68, 68, 68, 68, 68, 68, 68, 69, 69, 69, 69, 69, 69, 69, 69, 69, 69, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73
+
+blue_colors: .word 0x000000, 0x546d8e, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x546d8e, 0x000000, 0x546d8e, 0x546d8e, 0x000000, 0x00b7ef, 0x00b7ef, 0x00b7ef, 0x00b7ef, 0x000000, 0x546d8e, 0x546d8e, 0x000000, 0x000000, 0x00b7ef, 0x000000, 0x00b7ef, 0x00b7ef, 0x000000, 0x00b7ef, 0x000000, 0x000000, 0x000000, 0x00b7ef, 0x00b7ef, 0x00b7ef, 0x00b7ef, 0x00b7ef, 0x00b7ef, 0x00b7ef, 0x00b7ef, 0x000000, 0x000000, 0x00b7ef, 0x00b7ef, 0x000000, 0x000000, 0x000000, 0x000000, 0x00b7ef, 0x00b7ef, 0x000000, 0x000000, 0x00b7ef, 0x00b7ef, 0x00b7ef, 0x000000, 0x000000, 0x00b7ef, 0x00b7ef, 0x00b7ef, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x00b7ef, 0x00b7ef, 0x00b7ef, 0x000000, 0x000000, 0x00b7ef, 0x00b7ef, 0x00b7ef, 0x000000, 0x000000, 0x546d8e, 0x546d8e, 0x000000, 0x000000, 0x000000, 0x000000, 0x546d8e, 0x546d8e, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000
+
+red_x_coords: .word 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
+
+red_y_coords: .word 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 67, 67, 67, 67, 67, 67, 67, 67, 67, 67, 68, 68, 68, 68, 68, 68, 68, 68, 68, 68, 69, 69, 69, 69, 69, 69, 69, 69, 69, 69, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73
+
+red_colors: .word 0x000000, 0xfff200, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0xfff200, 0x000000, 0xfff200, 0xfff200, 0x000000, 0xed1c24, 0xed1c24, 0xed1c24, 0xed1c24, 0x000000, 0xfff200, 0xfff200, 0x000000, 0x000000, 0xed1c24, 0x000000, 0xed1c24, 0xed1c24, 0x000000, 0xed1c24, 0x000000, 0x000000, 0x000000, 0xed1c24, 0xed1c24, 0xed1c24, 0xed1c24, 0xed1c24, 0xed1c24, 0xed1c24, 0xed1c24, 0x000000, 0x000000, 0xed1c24, 0xed1c24, 0x000000, 0x000000, 0x000000, 0x000000, 0xed1c24, 0xed1c24, 0x000000, 0x000000, 0xed1c24, 0xed1c24, 0xed1c24, 0x000000, 0x000000, 0xed1c24, 0xed1c24, 0xed1c24, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0xed1c24, 0xed1c24, 0xed1c24, 0x000000, 0x000000, 0xed1c24, 0xed1c24, 0xed1c24, 0x000000, 0x000000, 0xfff200, 0xfff200, 0x000000, 0x000000, 0x000000, 0x000000, 0xfff200, 0xfff200, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000
+
+yellow_x_coords: .word 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49
+
+yellow_y_coords: .word 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 66, 66, 66, 66, 66, 66, 66, 66, 66, 66, 67, 67, 67, 67, 67, 67, 67, 67, 67, 67, 68, 68, 68, 68, 68, 68, 68, 68, 68, 68, 69, 69, 69, 69, 69, 69, 69, 69, 69, 69, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73
+
+yellow_colors: .word 0x000000, 0xfff9bd, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0xfff9bd, 0x000000, 0xfff9bd, 0xfff9bd, 0x000000, 0xfff200, 0xfff200, 0xfff200, 0xfff200, 0x000000, 0xfff9bd, 0xfff9bd, 0x000000, 0x000000, 0xfff200, 0x000000, 0xfff200, 0xfff200, 0x000000, 0xfff200, 0x000000, 0x000000, 0x000000, 0xfff200, 0xfff200, 0xfff200, 0xfff200, 0xfff200, 0xfff200, 0xfff200, 0xfff200, 0x000000, 0x000000, 0xfff200, 0xfff200, 0x000000, 0x000000, 0x000000, 0x000000, 0xfff200, 0xfff200, 0x000000, 0x000000, 0xfff200, 0xfff200, 0xfff200, 0x000000, 0x000000, 0xfff200, 0xfff200, 0xfff200, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0xfff200, 0xfff200, 0xfff200, 0x000000, 0x000000, 0xfff200, 0xfff200, 0xfff200, 0x000000, 0x000000, 0xfff9bd, 0xfff9bd, 0x000000, 0x000000, 0x000000, 0x000000, 0xfff9bd, 0xfff9bd, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000, 0x000000
+
 
 ##############################################################################
 # Mutable Data
@@ -109,6 +129,8 @@ main:
         jal draw_medicine_bottle
 
         jal initialize_viruses
+
+        jal draw_status_viruses
 
         # Generate first capsule instead of drawing directly
         jal generate_capsule
@@ -370,6 +392,22 @@ draw_capsule:
 
         jr $ra                     # Return from function
 
+# Function: draw_pixel_data
+# Description: Draws pixel data from arrays.
+# Inputs:
+#   $a0: x_coords array
+#   $a1: y_coords array
+#   $a2: colors array
+draw_virus1:
+    # Save return address
+    addi $sp, $sp, -4
+    sw $ra, 0($sp)
+    la $a1, x_coords      # Address of x coordinates array
+    la $a2, y_coords      # Address of y coordinates array
+    li $a0, 100           # Number of pixels 10x10 for viruses
+    la $a3, colors        # Address of colors array
+    jal paint_pixels
+
 # Function: draw_horizontal_line
 # Description: Draws a horizontal line on the bitmap display.
 # Inputs:
@@ -390,8 +428,8 @@ draw_horizontal_loop:
         # Calculate memory address: base + (row * 256) + (col * 4)
         sll $t7, $a0, 8            # $t7 = row * 256
         sll $t8, $t5, 2            # $t8 = col * 4
-        add $t9, $t7, $t8          # $t9 = row_offset + col_offset
-        add $t9, $t9, $s0          # $t9 = base_address + offset
+        addu $t9, $t7, $t8          # $t9 = row_offset + col_offset
+        addu $t9, $t9, $s0          # $t9 = base_address + offset
 
         # Store color at the calculated address
         sw $a3, 0($t9)             # Store border_color
@@ -794,6 +832,38 @@ create_virus_loop:
     addi $sp, $sp, 8
     jr $ra
 
+# Function to draw all static viruses
+draw_static_viruses:
+    # Save return address
+    addi $sp, $sp, -4
+    sw $ra, 0($sp)
+    
+    # Draw red virus
+    la $a1, red_x_coords      
+    la $a2, red_y_coords      
+    li $a0, 100               # 10x10 pixels
+    la $a3, red_colors        
+    jal paint_pixels
+    
+    # Draw blue virus (offset by 15 units to the right)
+    la $a1, blue_x_coords     
+    la $a2, blue_y_coords     
+    li $a0, 100              
+    la $a3, blue_colors       
+    jal paint_pixels
+    
+    # Draw yellow virus (offset by another 15 units to the right)
+    la $a1, yellow_x_coords   
+    la $a2, yellow_y_coords   
+    li $a0, 100              
+    la $a3, yellow_colors     
+    jal paint_pixels
+    
+    # Restore return address
+    lw $ra, 0($sp)
+    addi $sp, $sp, 4
+    jr $ra
+
 play_background_music:
     # Save registers we'll use
     addi $sp, $sp, -24
@@ -874,5 +944,63 @@ music_done:
     lw $t3, 16($sp)
     lw $t4, 20($sp)
     addi $sp, $sp, 24
+    
+    jr $ra
+
+# Function: paint_pixels
+# Description: Paints pixels from arrays of x, y coordinates and colors
+# Parameters:
+#   $a0: number of pixels to paint
+#   $a1: address of x_coords array
+#   $a2: address of y_coords array
+#   $a3: address of colors array
+
+paint_pixels:
+    # Save return address
+    addi $sp, $sp, -4
+    sw $ra, 0($sp)
+    
+    # Initialize counter and base address
+    move $t7, $zero        # Counter = 0
+    lw $t8, ADDR_DSPL     # Load display base address
+    move $t9, $a0         # Store total pixels count
+
+paint_loop:
+    # Check if we're done
+    beq $t7, $t9, paint_done
+    
+    # Load coordinates and color for current pixel
+    sll $t0, $t7, 2       # Multiply counter by 4 for word offset
+    
+    # Get x coordinate
+    add $t1, $a1, $t0     # x_coords address + offset
+    lw $t1, 0($t1)        # Load x coordinate
+    
+    # Get y coordinate
+    add $t2, $a2, $t0     # y_coords address + offset
+    lw $t2, 0($t2)        # Load y coordinate
+    
+    # Get color
+    add $t3, $a3, $t0     # colors address + offset
+    lw $t3, 0($t3)        # Load color
+    
+    # Calculate pixel address: base + (y * 256) + (x * 4)
+    sll $t4, $t2, 8       # y * 256
+    sll $t5, $t1, 2       # x * 4
+    add $t4, $t4, $t5     # Combine offsets
+    add $t4, $t4, $t8     # Add base address
+    
+    # Paint the pixel
+    sw $t3, 0($t4)        # Store color at calculated address
+    
+    # Increment counter
+    addi $t7, $t7, 1
+    
+    j paint_loop
+
+paint_done:
+    # Restore return address
+    lw $ra, 0($sp)
+    addi $sp, $sp, 4
     
     jr $ra
