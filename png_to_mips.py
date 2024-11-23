@@ -18,9 +18,9 @@ def convert_png_to_mapped_pixels(image_path, output_width, output_height, x_offs
         for x in range(output_width):
             r, g, b = pixel_array[y, x]
             
-            # Convert white to black
-            if (r, g, b) == (255, 255, 255):
-                r, g, b = 0, 0, 0
+            # # Convert white to black
+            # if (r, g, b) == (255, 255, 255):
+            #     r, g, b = 0, 0, 0
             
             # Convert RGB to hexadecimal format
             color_value = f"0x{r:02x}{g:02x}{b:02x}"
@@ -38,8 +38,8 @@ def convert_png_to_mapped_pixels(image_path, output_width, output_height, x_offs
 image_path = "drmariooo.png"  # Replace with the path to your PNG
 output_width = 30  # Desired width
 output_height = 45  # Desired height
-x_offset = 25  # Starting X position in bitmap
-y_offset = 64  # Starting Y position in bitmap
+x_offset = 3  # Starting X position in bitmap
+y_offset = 76  # Starting Y position in bitmap
 
 pixel_data = convert_png_to_mapped_pixels(image_path, output_width, output_height, x_offset, y_offset)
 
