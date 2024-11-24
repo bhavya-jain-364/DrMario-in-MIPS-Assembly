@@ -35,11 +35,11 @@ def convert_png_to_mapped_pixels(image_path, output_width, output_height, x_offs
     return results
 
 # Example usage
-image_path = "game over.png"  # Replace with the path to your PNG
-output_width =  64 # Desired width
-output_height = 32  # Desired height
-x_offset = 0  # Starting X position in bitmap
-y_offset = 16  # Starting Y position in bitmap
+image_path = "medicinebottle.png"  # Replace with the path to your PNG
+output_width =  35 # Desired width
+output_height = 53  # Desired height
+x_offset = 14  # Starting X position in bitmap
+y_offset = 8  # Starting Y position in bitmap
 
 pixel_data = convert_png_to_mapped_pixels(image_path, output_width, output_height, x_offset, y_offset)
 
