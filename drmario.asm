@@ -1367,6 +1367,7 @@ not_match:
     
 found_match:
     # Clear the matched tiles
+    jal play_match_sound
     jal clear_matched_tiles
     li $v0, 1    # Return true
     
@@ -1618,4 +1619,56 @@ play_rotate_sound:
     # Restore return address
     lw $ra, 0($sp)
     addi $sp, $sp, 4
+    jr $ra
+
+play_match_sound:
+    # Save return address and arguments
+    addi $sp, $sp, -20
+    sw $ra, 0($sp)
+    sw $a0, 4($sp)
+    sw $a1, 8($sp) 
+    sw $a2, 12($sp)
+    sw $a3, 16($sp)
+    
+    # First note (lowest)
+    li $v0, 31
+    li $a0, 60        # Start with lower pitch
+    li $a1, 50        # Short duration
+    li $a2, 1         # Instrument 1 (piano)
+    li $a3, 127       # Max volume
+    syscall
+    
+    # Tiny delay
+    li $v0, 32
+    li $a0, 20        # 20ms delay
+    syscall
+    
+    # Second note (middle)
+    li $v0, 31
+    li $a0, 72        # Higher pitch
+    li $a1, 50        # Same duration
+    li $a2, 1         # Same instrument
+    li $a3, 127       # Max volume
+    syscall
+    
+    # Tiny delay
+    li $v0, 32
+    li $a0, 20        # 20ms delay
+    syscall
+    
+    # Third note (highest)
+    li $v0, 31
+    li $a0, 84        # Highest pitch
+    li $a1, 100       # Slightly longer duration
+    li $a2, 1         # Same instrument
+    li $a3, 127       # Max volume
+    syscall
+    
+    # Restore arguments and return address
+    lw $ra, 0($sp)
+    lw $a0, 4($sp)
+    lw $a1, 8($sp)
+    lw $a2, 12($sp)
+    lw $a3, 16($sp)
+    addi $sp, $sp, 20
     jr $ra
