@@ -53,7 +53,7 @@ PAUSE_KEY:
 LAST_AUTO_DROP_TIME:
     .word 0         # Timestamp of the last automatic drop
 BASE_DROP_INTERVAL:
-    .word 1     # Base time between drops (1 second, immutable)
+    .word 1000     # Base time between drops (1 second, immutable)
 
 # Static virus drawing data
 blue_x_coords: .word 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38
@@ -1591,8 +1591,8 @@ play_move_sound:
     
     # Play a short beep
     li $v0, 31
-    li $a0, 80        # Pitch (higher pitch = 80)
-    li $a1, 100       # Duration (100ms)
+    li $a0, 40        # Pitch (higher pitch = 80)
+    li $a1, 50       # Duration (100ms)
     li $a2, 121       # Instrument (121 = sound effects)
     li $a3, 127       # Volume (max = 127)
     syscall
@@ -1609,22 +1609,9 @@ play_rotate_sound:
     
     # Play a short beep with different characteristics
     li $v0, 31
-    li $a0, 100       # Higher pitch than move sound (100 vs 80)
-    li $a1, 50        # Shorter duration (50ms vs 100ms)
-    li $a2, 121       # Same instrument (sound effects)
-    li $a3, 127       # Max volume
-    syscall
-    
-    # Small delay
-    li $v0, 32
-    li $a0, 10        # 10ms delay
-    syscall
-    
-    # Play second beep slightly lower
-    li $v0, 31
-    li $a0, 90        # Slightly lower pitch for second beep
-    li $a1, 50        # Same short duration
-    li $a2, 121       # Same instrument
+    li $a0, 80       # Higher pitch than move sound (100 vs 80)
+    li $a1, 75        # Shorter duration (50ms vs 100ms)
+    li $a2, 10       # Same instrument (sound effects)
     li $a3, 127       # Max volume
     syscall
     
