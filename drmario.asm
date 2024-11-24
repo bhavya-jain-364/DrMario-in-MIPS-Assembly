@@ -205,6 +205,9 @@ continue_game:
 check_input:
     lw $t2, 4($t0)                  # Load key value
     
+    #check for 'p' key (ASCII 112)
+    beq $t2, 112, handle_pause
+
     # Check for 'a' key (ASCII 97)
     beq $t2, 97, move_left
     
@@ -1085,10 +1088,14 @@ handle_pause:
     jal paint_pixels
 
 pause_loop:
+    jal play_background_music # keeps playing bg music while paused
+    
     # Check for keyboard input
     lw $t0, ADDR_KBRD    # Load keyboard address
     lw $t1, 0($t0)       # Get keyboard ready bit
     beq $t1, $zero, pause_loop  # If no input, keep waiting
+    
+    jal play_background_music
     
     # Get the key that was pressed
     lw $t0, 4($t0)       # Get the key value
