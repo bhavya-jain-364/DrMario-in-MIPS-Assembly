@@ -288,6 +288,14 @@ move_down:
     j continue_game
 
 capsule_stopped:
+    # Draw capsule in final position
+    lw $a0, CURRENT_COLOR_1
+    lw $a1, CURRENT_COLOR_2
+    jal draw_capsule
+    
+    # Check for matches
+    jal check_matches
+    
     # Generate new capsule
     jal generate_capsule
     j continue_game
@@ -1148,6 +1156,246 @@ auto_drop:
     
 auto_drop_end:
     # Restore return address and return
+    lw $ra, 0($sp)
+    addi $sp, $sp, 4
+    jr $ra
+
+check_matches:
+    # Save registers
+    addi $sp, $sp, -8
+    sw $ra, 0($sp)      # Return address STORE
+    sw $t0, 4($sp)      # Temp STORE
+    
+    # Check from first half
+    lw $a2, CAPSULE_POS_X1    # Load x1
+    lw $a3, CAPSULE_POS_Y1    # Load y1
+    lw $t0, CURRENT_COLOR_1   # Load color1
+    lw $t7, CURRENT_COLOR_1   # new implementation of color
+    addi $sp, $sp, -4         # Make space for color
+    sw $t0, 0($sp)           # Store color on stack
+    
+    # Check horizontal (right)
+    li $a0, 1    # direction x = 1
+    li $a1, 0    # direction y = 0
+    jal check_direction
+    
+    # Check vertical (down)
+    li $a0, 0    # direction x = 0
+    li $a1, 1    # direction y = 1
+    jal check_direction
+    
+    addi $sp, $sp, 4    # Remove color from stack
+    
+    # Now check from second half
+    lw $a2, CAPSULE_POS_X2    # Load x2
+    lw $a3, CAPSULE_POS_Y2    # Load y2
+    lw $t0, CURRENT_COLOR_2   # Load color2
+    lw $t7, CURRENT_COLOR_2   # new implementation of color
+    addi $sp, $sp, -4         # Make space for color
+    sw $t0, 0($sp)           # Store color on stack
+    
+    # Check horizontal (right)
+    li $a0, 1    # direction x = 1
+    li $a1, 0    # direction y = 0
+    jal check_direction
+    
+    # Check vertical (down)
+    li $a0, 0    # direction x = 0
+    li $a1, 1    # direction y = 1
+    jal check_direction
+    
+    addi $sp, $sp, 4    # Remove color from stack
+    
+    # Restore registers
+    lw $ra, 0($sp)      # Return address LOAD
+    lw $t0, 4($sp)      # Temp LOAD
+    addi $sp, $sp, 8
+    jr $ra
+
+check_all_directions:
+    # Save registers
+    addi $sp, $sp, -4
+    sw $ra, 0($sp)
+    
+    # Check horizontal (right)
+    li $a0, 1    # direction x = 1
+    li $a1, 0    # direction y = 0
+    jal check_direction
+    
+    # Check horizontal (left)
+    li $a0, -1   # direction x = -1
+    li $a1, 0    # direction y = 0
+    jal check_direction
+    
+    # Check vertical (down)
+    li $a0, 0    # direction x = 0
+    li $a1, 1    # direction y = 1
+    jal check_direction
+    
+    # Check vertical (up)
+    li $a0, 0    # direction x = 0
+    li $a1, -1   # direction y = -1
+    jal check_direction
+    
+    # Restore registers
+    lw $ra, 0($sp)
+    addi $sp, $sp, 4
+    jr $ra
+
+check_direction:
+    # $a0 = direction x
+    # $a1 = direction y
+    # $s2 = color to match (passed from caller)
+    
+    # Save registers
+    addi $sp, $sp, -24
+    sw $ra, 0($sp)      # Return address STORE
+    sw $t0, 4($sp)      # Match counter STORE
+    sw $t1, 8($sp)      # Current x STORE
+    sw $t2, 12($sp)     # Current y STORE
+    sw $t3, 16($sp)     # Display offset STORE
+    sw $t4, 20($sp)     # Base address STORE
+    
+    # Initialize counter
+    li $t0, 1           # Start at 1 (we already have the first tile)
+    
+    # Load starting position from a2 and a3
+    move $t1, $a2  # Current x
+    move $t2, $a3  # Current y
+    move $t8, $a2  # Storing current x here asw cos i cant figure out where its being modified
+    move $t9, $a3  # Storing current y here asw cos i cant figure out where its being modified
+    lw $t4, ADDR_DSPL       # Display base address
+    
+check_next:
+    # Calculate next position
+    add $t1, $t1, $a0    # Next x
+    add $t2, $t2, $a1    # Next y
+    
+    # Boundary check
+    # li $t3, 8           # Left boundary
+    # blt $t1, $t3, not_match
+    # li $t3, 55          # Right boundary
+    # bgt $t1, $t3, not_match
+    # li $t3, 8           # Top boundary
+    # blt $t2, $t3, not_match
+    # li $t3, 55          # Bottom boundary
+    # bgt $t2, $t3, not_match
+    
+    # Calculate display address
+    sll $t3, $t2, 8     # y * 256
+    sll $t5, $t1, 2     # x * 4
+    add $t3, $t3, $t5   # combine offsets
+    add $t3, $t3, $t4   # add to base address
+    
+    # Load color at position
+    lw $v0, 0($t3)      # Get color
+    
+    # Compare with target color
+    bne $v0, $t7, not_match
+    
+    # Increment counter
+    addi $t0, $t0, 1
+    
+    # Check if we have 4 matches
+    beq $t0, 4, found_match
+    
+    # Continue checking
+    j check_next
+    
+not_match:
+    li $v0, 0    # Return false
+    j check_direction_done
+    
+found_match:
+    # Clear the matched tiles
+    jal clear_matched_tiles
+    li $v0, 1    # Return true
+    
+check_direction_done:
+    # Restore registers
+    lw $ra, 0($sp)      # Return address LOAD
+    lw $t0, 4($sp)      # Match counter LOAD
+    lw $t1, 8($sp)      # Current x LOAD
+    lw $t2, 12($sp)     # Current y LOAD
+    lw $t3, 16($sp)     # Display offset LOAD
+    lw $t4, 20($sp)     # Base address LOAD
+    addi $sp, $sp, 24
+    jr $ra
+    # Restore registers
+    lw $ra, 0($sp)      # Return address LOAD
+    lw $t0, 4($sp)      # Match counter LOAD
+    lw $t1, 8($sp)      # Current x LOAD
+    lw $t2, 12($sp)     # Current y LOAD
+    lw $t3, 16($sp)     # Display offset LOAD
+    lw $t4, 20($sp)     # Color temp LOAD
+    addi $sp, $sp, 24
+    jr $ra
+    # Restore registers
+    lw $ra, 0($sp)      # Return address LOAD
+    lw $t0, 4($sp)      # Match counter LOAD
+    lw $t1, 8($sp)      # Current x LOAD
+    lw $t2, 12($sp)     # Current y LOAD
+    lw $t3, 16($sp)     # Display offset LOAD
+    lw $t4, 20($sp)     # Base address LOAD
+    addi $sp, $sp, 24
+    jr $ra
+    # Restore registers
+    lw $ra, 0($sp)      # Return address LOAD
+    lw $t0, 4($sp)      # Match counter LOAD
+    lw $t1, 8($sp)      # Current x LOAD
+    lw $t2, 12($sp)     # Current y LOAD
+    lw $t3, 16($sp)     # Display offset LOAD
+    lw $t4, 20($sp)     # Color temp LOAD
+    lw $s0, 24($sp)     # Base address LOAD (restore original $s0)
+    addi $sp, $sp, 28
+    jr $ra
+get_color_at_position:
+    # $t1 = x position
+    # $t2 = y position
+    # Returns color in $v0
+    
+    # Calculate display address
+    sll $t3, $t2, 8    # y * 256
+    sll $t4, $t1, 2    # x * 4
+    add $t3, $t3, $t4  # combine offsets
+    lw $s0, ADDR_DSPL
+    add $t3, $t3, $s0  # add to base address
+    
+    # Load color
+    lw $v0, 0($t3)
+    jr $ra
+
+clear_matched_tiles:
+    # Save registers
+    addi $sp, $sp, -4
+    sw $ra, 0($sp)
+    
+    # Reset to starting position
+    move $t1, $t8    # x position
+    move $t2, $t9    # y position
+    li $t0, 0        # counter
+    
+clear_loop:
+    # Calculate display address
+    sll $t3, $t2, 8    # y * 256
+    sll $t4, $t1, 2    # x * 4
+    add $t3, $t3, $t4  # combine offsets
+    lw $t4, ADDR_DSPL
+    add $t3, $t3, $t4  # add to base address
+    
+    # Clear tile
+    lw $t4, BG_COLOR
+    sw $t4, 0($t3)
+    
+    # Move to next position
+    add $t1, $t1, $a0    # Next x
+    add $t2, $t2, $a1    # Next y
+    
+    # Increment counter
+    addi $t0, $t0, 1
+    blt $t0, 4, clear_loop
+    
+    # Restore registers
     lw $ra, 0($sp)
     addi $sp, $sp, 4
     jr $ra
