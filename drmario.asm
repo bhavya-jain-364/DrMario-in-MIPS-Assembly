@@ -138,7 +138,7 @@ CAPSULE_POS_Y2:
 CAPSULE_ORIENTATION:
     .word 0     # 0: horizontal right, 1: vertical down, 2: horizontal left, 3: vertical up
 SLEEP_TIME:
-    .word 1  # Sleep time in milliseconds (1 second)
+    .word 13  # Sleep time in milliseconds (1 second)
 CURRENT_COLOR_1:
     .word 0x000000    # Current color for first half
 CURRENT_COLOR_2:
