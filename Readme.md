@@ -1,37 +1,35 @@
 # Dr. Mario Assembly Implementation
 
-A MIPS assembly implementation of the classic Nintendo game Dr. Mario, built for the Saturn MIPS simulator.
+A MIPS assembly implementation of the classic Nintendo game Dr. Mario, featuring custom sprites, background music, and authentic gameplay mechanics.
 
 ![Dr Mario Game](game.png)
 
 ## Overview
 
-This project recreates the classic Dr. Mario game in MIPS assembly, featuring a modern development environment with Saturn's built-in debugging tools and performance optimizations.
-
-## Prerequisites
-
-- [Saturn v0.1.9 or later](https://github.com/1whatleytay/saturn/releases/latest)
-  - Windows: Download the `.msi` installer
-  - macOS: Download the `.dmg` file
-  - Linux: Choose either `.deb` or `.AppImage`
+This project recreates Dr. Mario in MIPS assembly, implementing core gameplay mechanics while adding unique visual touches and sound effects. The game features custom-designed sprites created on pixilart.org and converted using a custom Python script.
 
 ## Features
 
-### Game Features
-- Falling capsule mechanics with rotation
-- Virus elimination through color matching
-- Combo system
-- Gravity simulation with increasing speed
-- Collision detection
-- Background music and sound effects
-- Pause functionality
+### Implemented Milestones
+- **Core Mechanics**
+  - Capsule movement and rotation
+  - Virus elimination system
+  - Color matching logic
+  - Collision detection
 
-### Saturn-Specific Features
-- In-line debugging support
-- Real-time memory inspection
-- Breakpoint setting
-- Performance monitoring
-- Modern UI interface
+- **Advanced Features**
+  - Gravity simulation with increasing speed
+  - Game over and retry functionality
+  - Pause system with visual display
+  - Background music implementation
+  - Custom sprite rendering for Dr. Mario and viruses
+
+### Audio System
+- Background music using MIDI conversion
+- Sound effects for:
+  - Capsule movement
+  - Capsule rotation
+  - Game over states
 
 ## Controls
 - `W` - Rotate capsule
@@ -42,15 +40,39 @@ This project recreates the classic Dr. Mario game in MIPS assembly, featuring a 
 - `Q` - Quit game
 - `R` - Restart game
 
+## Technical Implementation
+
+### Graphics Pipeline
+- Sprites designed on pixilart.org
+- Custom Python script (`png_to_mips.py`) for sprite conversion:
+  ```python
+  def convert_png_to_mapped_pixels(image_path, output_width, output_height, x_offset=0, y_offset=0):
+      # Converts PNG images to MIPS-compatible pixel arrays
+      # Outputs coordinate and color data in assembly format
+  ```
+- Unique visual elements:
+  - Custom Dr. Mario sprite with ginger hair
+  - Attempted Goomba artwork on medicine bottle
+  - Modified color palette for better visibility
+
+### Display Configuration
+- Resolution: 64x128 pixels
+- Unit size: 1x1 pixel
+- Base Address: 0x10008000
+
+### Sound Implementation
+- MIDI file conversion to component arrays:
+  - Duration
+  - Timing
+  - Velocity
+  - Instrument
+- Real-time playback using MIPS syscalls
+
 ## Setup Instructions
 
-1. Install Saturn MIPS simulator from the [latest release](https://github.com/1whatleytay/saturn/releases/latest)
-2. Clone this repository:
-```bash
-git clone https://github.com/yourusername/dr-mario-assembly.git
-```
-3. Open Saturn and load the project
-4. Configure display settings:
+1. Install Saturn MIPS simulator
+2. Clone this repository
+3. Configure display settings:
    - Width: 64 pixels
    - Height: 128 pixels
    - Unit Size: 1x1
@@ -60,37 +82,23 @@ git clone https://github.com/yourusername/dr-mario-assembly.git
 
 ```
 .
-├── drmario.asm          # Main game logic
+├── drmario.asm              # Main game logic
 ├── Resources/
-│   └── data/           # Sprite and sound data
-├── LICENSE             # MIT License
-└── README.md           # This file
+│   ├── data/               # Sprite and sound data
+│   └── png_to_mips.py      # Sprite conversion utility
+├── LICENSE                 # MIT License
+└── README.md              # This file
 ```
 
-## Development
+## Development Tools
 
-This project takes advantage of Saturn's modern features:
-- Custom editor for MIPS assembly
-- Integrated debugger
-- Real-time value inspection
-- Performance optimization tools
-
-## Debugging Tips
-
-Saturn provides several tools to help debug the game:
-- Set breakpoints directly in the code
-- Monitor register values in real-time
-- Step through instructions
-- View memory contents during execution
+- pixilart.org for sprite design
+- Custom Python scripts for asset conversion
+- Saturn MIPS simulator for development and testing
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- [Saturn MIPS Simulator](https://github.com/1whatleytay/saturn) - Modern MIPS development environment
-- Original Dr. Mario game by Nintendo
 
 ## Author
 
@@ -98,4 +106,4 @@ Bhavya Jain
 
 ---
 
-*Note: This project is built specifically for the Saturn MIPS simulator v0.1.9 or later. For the best experience, please ensure you're using the latest version of Saturn.* 
+*Note: This is an educational project created for learning purposes and is not affiliated with Nintendo or the original Dr. Mario game.* 
